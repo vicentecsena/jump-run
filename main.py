@@ -58,9 +58,13 @@ test_font = pygame.font.Font(None, 50)
 game_active = False
 start_time = 0
 score = 0
-# Fonte do ficheiro: https://pixabay.com/music/electronic-let-the-games-begin-21858/
-bg_music = pygame.mixer.Sound('audio/let-the-games-begin-21858.mp3')
-bg_music.play(loops = -1)
+
+try:
+	# Fonte do ficheiro: https://pixabay.com/music/electronic-let-the-games-begin-21858/
+	bg_music = pygame.mixer.Sound('audio/let-the-games-begin-21858.mp3')
+	bg_music.play(loops = -1)
+except:
+	print("Error loading music file")
 
 #Groups
 player = pygame.sprite.GroupSingle()
@@ -88,8 +92,8 @@ fly_surf = fly_frames[fly_frame_index]
 obstacle_rect_list = []
 
 
-player_walk_1 = pygame.image.load('graphics/player/player_walk_1.png').convert_alpha()
-player_walk_2 = pygame.image.load('graphics/player/player_walk_2.png').convert_alpha()
+player_walk_1 = pygame.transform.scale2x(pygame.image.load('graphics/player/walk1.png').convert_alpha())
+player_walk_2 = pygame.transform.scale2x(pygame.image.load('graphics/player/walk2.png').convert_alpha())
 player_walk = [player_walk_1,player_walk_2]
 player_index = 0
 player_jump = pygame.image.load('graphics/player/jump.png').convert_alpha()
@@ -98,9 +102,10 @@ player_surf = player_walk[player_index]
 player_rect = player_surf.get_rect(midbottom = INITIAL_PLAYER_POS)
 player_gravity = 0
 
+
 # Intro screen
-player_stand = pygame.image.load('graphics/player/player_stand.png').convert_alpha()
-player_stand = pygame.transform.rotozoom(player_stand,0,2)
+player_stand = pygame.image.load('graphics/player/jump.png').convert_alpha()
+player_stand = pygame.transform.scale(player_stand , (64, 92)) #pygame.transform.rotozoom(player_stand,0,6)
 player_stand_rect = player_stand.get_rect(center = (400,200))
 
 game_name = test_font.render('Jump\'N\'Run',False,(111,196,169))

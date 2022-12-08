@@ -1,5 +1,6 @@
 import pygame
 from random import randint
+from settings import FLY_POS_Y
 
 class Obstacle(pygame.sprite.Sprite):
 	def __init__(self,type):
@@ -9,7 +10,7 @@ class Obstacle(pygame.sprite.Sprite):
 			fly_1 = pygame.image.load('graphics/fly/fly1.png').convert_alpha()
 			fly_2 = pygame.image.load('graphics/fly/fly2.png').convert_alpha()
 			self.frames = [fly_1,fly_2]
-			y_pos = 210
+			y_pos = FLY_POS_Y
 		else:
 			snail_1 = pygame.image.load('graphics/snail/snail1.png').convert_alpha()
 			snail_2 = pygame.image.load('graphics/snail/snail2.png').convert_alpha()
