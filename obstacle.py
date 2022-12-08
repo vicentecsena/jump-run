@@ -3,6 +3,10 @@ from random import randint
 from settings import FLY_POS_Y
 
 class Obstacle(pygame.sprite.Sprite):
+
+	'''
+	Função de inicialização da instância da classe (objeto). Recebe como parâmetro o tipo de obstáculo (type) - (Critério de Correção 8)
+	'''
 	def __init__(self,type):
 		super().__init__()
 		

@@ -31,12 +31,20 @@ class Player(pygame.sprite.Sprite):
 				self.jump_sound.play()
 			except:
 				print("No music file")
+
+		'''
+		Utilização de valores bool para verificar a ocorrência de duas condições em simultâneo (Critério de Correção 3)
+		'''
 		if keys[pygame.K_LEFT] and self.rect.x > 0:
 			self.rect.left -= 5
 		if keys[pygame.K_RIGHT] and self.rect.right < WITH:
 			self.rect.right += 5
 
 	def apply_gravity(self):
+
+		'''
+		Utilização de vários operadores para aplicação de critério de gravidade (Critério de Correção 4)
+		'''
 		self.gravity += 1
 		self.rect.y += self.gravity
 		if self.rect.bottom >= 300:

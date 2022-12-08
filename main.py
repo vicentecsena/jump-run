@@ -8,29 +8,14 @@ from settings import *
 
 def display_score():
 	current_time = int(pygame.time.get_ticks() / 1000) - start_time
+
+	'''
+	Formatação de string para representação de texto com valor com base numa variavel de tipo numérico (Critério de Correção 2)
+	'''
 	score_surf = test_font.render(f'Pontuação: {current_time}',False,(64,64,64))
 	score_rect = score_surf.get_rect(center = (400,50))
 	screen.blit(score_surf,score_rect)
 	return current_time
-
-def obstacle_movement(obstacle_list):
-	if obstacle_list:
-		for obstacle_rect in obstacle_list:
-			obstacle_rect.x -= 5
-
-			if obstacle_rect.bottom == 300: screen.blit(snail_surf,obstacle_rect)
-			else: screen.blit(fly_surf,obstacle_rect)
-
-		obstacle_list = [obstacle for obstacle in obstacle_list if obstacle.x > -100]
-
-		return obstacle_list
-	else: return []
-
-def collisions(player,obstacles):
-	if obstacles:
-		for obstacle_rect in obstacles:
-			if player.colliderect(obstacle_rect): return False
-	return True
 
 def collision_sprite():
 	if pygame.sprite.spritecollide(player.sprite,obstacle_group,False):
@@ -45,12 +30,12 @@ def player_animation():
 		player_surf = player_jump
 	else:
 		player_index += 0.1
-		if player_index >= len(player_walk):player_index = 0
+		if player_index >= len(player_walk): player_index = 0
 		player_surf = player_walk[int(player_index)]
 
 pygame.init()
 screen = pygame.display.set_mode((WITH,HEIGHT))
-pygame.display.set_caption('Runner')
+pygame.display.set_caption('Jump\'N\'Run')
 clock = pygame.time.Clock()
 #Não foi possível utilizar a fonte original, não suporta caracteres portugues (com acentos)
 #test_font = pygame.font.Font('font/Pixeltype.ttf', 50)
@@ -124,8 +109,17 @@ pygame.time.set_timer(snail_animation_timer,500)
 fly_animation_timer = pygame.USEREVENT + 3
 pygame.time.set_timer(fly_animation_timer,200)
 
+'''
+Execução permanente, com verificação de input do utilizador ou do estado da aplicação (Critério de Correção 7)
+'''
 while True:
 	for event in pygame.event.get():
+
+		'''
+		Estrutura de decisão para determinar evento a realizar (Critério de Correção 5)
+
+		Verificação de input do utilizador (Critério de Correção 10)
+		'''
 		if event.type == pygame.QUIT:
 			pygame.quit()
 			exit()
@@ -144,15 +138,28 @@ while True:
 			if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
 				game_active = True
 				
+
+				'''
+				Passagem para número inteiro de resultado com valor float (Critério de Correção 2)
+				'''
 				start_time = int(pygame.time.get_ticks() / 1000)
 
 		if game_active:
 			if event.type == obstacle_timer:
+
+				'''
+				Chamada de função de inicialização da instância da classe (objeto). Passa como parâmetro o tipo de obstáculo (type) - (Critério de Correção 8)
+				Criação de Array (Critério de Correção 9)
+				'''
 				obstacle_group.add(Obstacle(choice(['fly','snail','snail','snail'])))
 
 			if event.type == snail_animation_timer:
 				if snail_frame_index == 0: snail_frame_index = 1
 				else: snail_frame_index = 0
+
+				'''
+				Leitura de Array (Critério de Correção 9)
+				'''
 				snail_surf = snail_frames[snail_frame_index] 
 
 			if event.type == fly_animation_timer:
