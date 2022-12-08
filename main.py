@@ -66,7 +66,7 @@ try:
 except:
 	print("Error loading music file")
 
-#Groups
+#Grupos
 player = pygame.sprite.GroupSingle()
 player.add(Player())
 
@@ -75,14 +75,14 @@ obstacle_group = pygame.sprite.Group()
 sky_surface = pygame.image.load('graphics/Sky.png').convert()
 ground_surface = pygame.image.load('graphics/ground.png').convert()
 
-# Snail 
+# Caracol
 snail_frame_1 = pygame.image.load('graphics/snail/snail1.png').convert_alpha()
 snail_frame_2 = pygame.image.load('graphics/snail/snail2.png').convert_alpha()
 snail_frames = [snail_frame_1, snail_frame_2]
 snail_frame_index = 0
 snail_surf = snail_frames[snail_frame_index]
 
-# Fly
+# Mosca
 fly_frame1 = pygame.image.load('graphics/fly/fly1.png').convert_alpha()
 fly_frame2 = pygame.image.load('graphics/fly/fly2.png').convert_alpha()
 fly_frames = [fly_frame1, fly_frame2]
@@ -103,9 +103,9 @@ player_rect = player_surf.get_rect(midbottom = INITIAL_PLAYER_POS)
 player_gravity = 0
 
 
-# Intro screen
+# Ecrã inicial
 player_stand = pygame.image.load('graphics/player/jump.png').convert_alpha()
-player_stand = pygame.transform.scale(player_stand , (64, 92)) #pygame.transform.rotozoom(player_stand,0,6)
+player_stand = pygame.transform.scale(player_stand , (64, 92))
 player_stand_rect = player_stand.get_rect(center = (400,200))
 
 game_name = test_font.render('Jump\'N\'Run',False,(111,196,169))
@@ -171,11 +171,11 @@ while True:
 		player.draw(screen)
 		player.update()
 
-		# obstacle
+		# obstáculo
 		obstacle_group.draw(screen)
 		obstacle_group.update()
 
-		# collision 
+		# colisão
 		game_active = collision_sprite()
 		
 	else:
