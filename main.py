@@ -36,6 +36,8 @@ def player_animation():
 pygame.init()
 screen = pygame.display.set_mode((WITH,HEIGHT))
 pygame.display.set_caption('Jump\'N\'Run')
+GAME_ICON = pygame.image.load("graphics/Player/jump.png")
+pygame.display.set_icon(GAME_ICON)
 clock = pygame.time.Clock()
 #Não foi possível utilizar a fonte original, não suporta caracteres portugues (com acentos)
 #test_font = pygame.font.Font('font/Pixeltype.ttf', 50)
