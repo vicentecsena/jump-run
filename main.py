@@ -90,7 +90,7 @@ player_gravity = 0
 
 # Ecrã inicial
 player_stand = pygame.image.load('graphics/player/jump.png').convert_alpha()
-player_stand = pygame.transform.scale(player_stand , (64, 92))
+player_stand = pygame.transform.scale(player_stand , (128, 184))
 player_stand_rect = player_stand.get_rect(center = (400,200))
 
 game_name = test_font.render('Jump\'N\'Run',False,(111,196,169))
