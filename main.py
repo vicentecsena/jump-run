@@ -57,7 +57,7 @@ player.add(Player())
 
 obstacle_group = pygame.sprite.Group()
 
-sky_surface = pygame.image.load('graphics/Sky.png').convert()
+sky_surface = pygame.image.load('graphics/sky.png').convert()
 ground_surface = pygame.image.load('graphics/ground.png').convert()
 
 # Caracol
