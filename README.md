@@ -1,11 +1,13 @@
 Projeto baseado no exemplo disponível em [The ultimate introduction to Pygame](https://www.youtube.com/watch?v=AY9MnQ4x3zk)
 
-Foram realizadas as seguintes alterações/melhorias em relação ao projeto original:
+Recriou-se o codigo do projeto utilizado como exemplo e acrescentaram-se novas funcionalidades:
 
 * Passagem das classes paras ficheiros próprios (*obstacle.py* e *player.py*)
 * Criação de ficheiro para valores de configuração globais (*settings.py*)
 * Alterada a música ambiente do jogo pelo tema [Let the Games Begin](https://pixabay.com/music/electronic-let-the-games-begin-21858/)
 * Introduzida a funcionalidade de mover o jogador para a esquerda e para a direita (apenas permitia saltar)
+* Alteração das imagens utilizadas no jogador
+* Alteração/Criação da lógica associada às colisões entre objetos e de limitação de movimentos
 * Criação deste ficheiro com comentários (README.md)
 * Criação de repositório no github com o código do projeto: [https://github.com/vicentecsena/jump-run](https://github.com/vicentecsena/jump-run)
 * Foi utilizado o Visual Studio Code para desenvolver
