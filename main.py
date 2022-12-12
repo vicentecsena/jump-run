@@ -23,16 +23,6 @@ def collision_sprite():
 		return False
 	else: return True
 
-def player_animation():
-	global player_surf, player_index
-
-	if player_rect.bottom < 300:
-		player_surf = player_jump
-	else:
-		player_index += 0.1
-		if player_index >= len(player_walk): player_index = 0
-		player_surf = player_walk[int(player_index)]
-
 pygame.init()
 screen = pygame.display.set_mode((WITH,HEIGHT))
 pygame.display.set_caption('Jump\'N\'Run')
@@ -62,32 +52,7 @@ obstacle_group = pygame.sprite.Group()
 sky_surface = pygame.image.load('graphics/sky.png').convert()
 ground_surface = pygame.image.load('graphics/ground.png').convert()
 
-# Caracol
-snail_frame_1 = pygame.image.load('graphics/snail/snail1.png').convert_alpha()
-snail_frame_2 = pygame.image.load('graphics/snail/snail2.png').convert_alpha()
-snail_frames = [snail_frame_1, snail_frame_2]
-snail_frame_index = 0
-snail_surf = snail_frames[snail_frame_index]
-
-# Mosca
-fly_frame1 = pygame.image.load('graphics/fly/fly1.png').convert_alpha()
-fly_frame2 = pygame.image.load('graphics/fly/fly2.png').convert_alpha()
-fly_frames = [fly_frame1, fly_frame2]
-fly_frame_index = 0
-fly_surf = fly_frames[fly_frame_index]
-
 obstacle_rect_list = []
-
-
-player_walk_1 = pygame.transform.scale2x(pygame.image.load('graphics/player/walk1.png').convert_alpha())
-player_walk_2 = pygame.transform.scale2x(pygame.image.load('graphics/player/walk2.png').convert_alpha())
-player_walk = [player_walk_1,player_walk_2]
-player_index = 0
-player_jump = pygame.image.load('graphics/player/jump.png').convert_alpha()
-
-player_surf = player_walk[player_index]
-player_rect = player_surf.get_rect(midbottom = INITIAL_PLAYER_POS)
-player_gravity = 0
 
 
 # Ecrã inicial
@@ -126,21 +91,10 @@ while True:
 			pygame.quit()
 			exit()
 		
-		if game_active:
-			if event.type == pygame.MOUSEBUTTONDOWN:
-				if player_rect.collidepoint(event.pos) and player_rect.bottom >= 300: 
-					player_gravity = -20
-			
-			if event.type == pygame.KEYDOWN:
-				if event.key == pygame.K_SPACE and player_rect.bottom >= 300:
-					player_gravity = -20
-				if event.key == pygame.K_LEFT and player_rect.left >= 0:
-					player_rect.move(player_rect.x-5, player_rect.y)
-		else:
+		if not game_active:
 			if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
 				game_active = True
 				
-
 				'''
 				Passagem para número inteiro de resultado com valor float (Critério de Correção 2)
 				'''
@@ -154,20 +108,6 @@ while True:
 				Criação de Array (Critério de Correção 9)
 				'''
 				obstacle_group.add(Obstacle(choice(['fly','snail','snail','snail'])))
-
-			if event.type == snail_animation_timer:
-				if snail_frame_index == 0: snail_frame_index = 1
-				else: snail_frame_index = 0
-
-				'''
-				Leitura de Array (Critério de Correção 9)
-				'''
-				snail_surf = snail_frames[snail_frame_index] 
-
-			if event.type == fly_animation_timer:
-				if fly_frame_index == 0: fly_frame_index = 1
-				else: fly_frame_index = 0
-				fly_surf = fly_frames[fly_frame_index] 
 
 
 	if game_active:
@@ -191,7 +131,7 @@ while True:
 		screen.fill((94,129,162))
 		screen.blit(player_stand,player_stand_rect)
 		obstacle_rect_list.clear()
-		player_rect.midbottom = INITIAL_PLAYER_POS
+		#player_rect.midbottom = INITIAL_PLAYER_POS
 		player_gravity = 0
 
 		score_message = test_font.render(f'A sua pontuação: {score}',False,(111,196,169))
