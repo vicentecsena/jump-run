@@ -90,15 +90,6 @@ while True:
 		if event.type == pygame.QUIT:
 			pygame.quit()
 			exit()
-		
-		if not game_active:
-			if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-				game_active = True
-				
-				'''
-				Passagem para número inteiro de resultado com valor float (Critério de Correção 2)
-				'''
-				start_time = int(pygame.time.get_ticks() / 1000)
 
 		if game_active:
 			if event.type == obstacle_timer:
@@ -108,7 +99,14 @@ while True:
 				Criação de Array (Critério de Correção 9)
 				'''
 				obstacle_group.add(Obstacle(choice(['fly','snail','snail','snail'])))
-
+		else:
+			if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+				game_active = True
+				
+				'''
+				Passagem para número inteiro de resultado com valor float (Critério de Correção 2)
+				'''
+				start_time = int(pygame.time.get_ticks() / 1000)
 
 	if game_active:
 		screen.blit(sky_surface,(0,0))
