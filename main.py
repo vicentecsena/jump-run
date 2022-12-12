@@ -4,6 +4,7 @@ from random import choice
 from player import Player
 from obstacle import Obstacle
 from settings import *
+import time
 
 
 def display_score():
@@ -16,6 +17,49 @@ def display_score():
 	score_rect = score_surf.get_rect(center = (400,50))
 	screen.blit(score_surf,score_rect)
 	return current_time
+
+def display_best_scores(number):
+	unique_scores = list(set(scores_list))
+	unique_scores.sort(reverse=True)
+	
+	print(unique_scores)
+
+	if len(unique_scores) > 1:
+		best_scores = test_font.render("Os seus melhores resultados:",False,(111,196,169))
+		best_scores_rect = score_message.get_rect(center = (320,230))
+		pos_y = 270
+		delta_y = 45
+		
+		if len(unique_scores) >= 3:
+			for s in range(3):
+				score1 = test_font.render(f'{s + 1}º - {unique_scores[s]}', False,(111,196,169))
+				score1_rect = score1.get_rect(center = (390,pos_y))
+				screen.blit(best_scores,best_scores_rect)
+				screen.blit(score1,score1_rect)
+				pos_y += delta_y
+		else:
+			for s in range(len(unique_scores)):
+				score1 = test_font.render(f'{s + 1}º - {unique_scores[s]}', False,(111,196,169))
+				score1_rect = score1.get_rect(center = (390,pos_y))
+				screen.blit(best_scores,best_scores_rect)
+				screen.blit(score1,score1_rect)
+				pos_y += delta_y
+
+		'''
+		O código em cima poderia ser otimizado através da utilização de um ternary operator, evitando a duplicação do código para desenho no ecrã
+		'''
+		'''
+		range_scores = range(3) if len(unique_scores) >= 3 else range(len(unique_scores))
+		for s in range_scores:
+			score1 = test_font.render(f'{s + 1}º - {unique_scores[s]}', False,(111,196,169))
+			score1_rect = score1.get_rect(center = (390,pos_y))
+			screen.blit(best_scores,best_scores_rect)
+			screen.blit(score1,score1_rect)
+			pos_y += delta_y
+		'''
+	else:
+		pass	
+
 
 def collision_sprite():
 	if pygame.sprite.spritecollide(player.sprite,obstacle_group,False):
@@ -54,6 +98,7 @@ ground_surface = pygame.image.load('graphics/ground.png').convert()
 
 obstacle_rect_list = []
 
+scores_list = []
 
 # Ecrã inicial
 player_stand = pygame.image.load('graphics/player/jump.png').convert_alpha()
@@ -75,6 +120,8 @@ pygame.time.set_timer(snail_animation_timer,500)
 
 fly_animation_timer = pygame.USEREVENT + 3
 pygame.time.set_timer(fly_animation_timer,200)
+
+
 
 '''
 Execução permanente, com verificação de input do utilizador ou do estado da aplicação (Critério de Correção 7)
@@ -111,7 +158,7 @@ while True:
 	if game_active:
 		screen.blit(sky_surface,(0,0))
 		screen.blit(ground_surface,(0,300))
-
+		
 		score = display_score()
 
 		# Player 
@@ -124,20 +171,25 @@ while True:
 
 		# colisão
 		game_active = collision_sprite()
-		
+		if not game_active:
+			scores_list.append(score)		
 	else:
 		screen.fill((94,129,162))
-		screen.blit(player_stand,player_stand_rect)
+		
 		obstacle_rect_list.clear()
 		#player_rect.midbottom = INITIAL_PLAYER_POS
 		player_gravity = 0
-
 		score_message = test_font.render(f'A sua pontuação: {score}',False,(111,196,169))
-		score_message_rect = score_message.get_rect(center = (400,330))
+		score_message_rect = score_message.get_rect(center = (400,150))
 		screen.blit(game_name,game_name_rect)
-
-		if score == 0: screen.blit(game_message,game_message_rect)
-		else: screen.blit(score_message,score_message_rect)
+		
+		
+		if score == 0: 
+			screen.blit(game_message,game_message_rect)
+			screen.blit(player_stand, player_stand_rect)
+		else: 
+			screen.blit(score_message,score_message_rect)
+			display_best_scores(3)
 
 	pygame.display.update()
 	clock.tick(60)
