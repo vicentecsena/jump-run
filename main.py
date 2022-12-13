@@ -22,7 +22,7 @@ def display_best_scores(number):
 	unique_scores = list(set(scores_list))
 	unique_scores.sort(reverse=True)
 	
-	print(unique_scores)
+	#print(unique_scores)
 
 	if len(unique_scores) > 1:
 		best_scores = test_font.render("Os seus melhores resultados:",False,(111,196,169))
@@ -30,33 +30,21 @@ def display_best_scores(number):
 		pos_y = 270
 		delta_y = 45
 		
-		if len(unique_scores) >= 3:
-			for s in range(3):
-				score1 = test_font.render(f'{s + 1}º - {unique_scores[s]}', False,(111,196,169))
-				score1_rect = score1.get_rect(center = (390,pos_y))
-				screen.blit(best_scores,best_scores_rect)
-				screen.blit(score1,score1_rect)
-				pos_y += delta_y
-		else:
-			for s in range(len(unique_scores)):
-				score1 = test_font.render(f'{s + 1}º - {unique_scores[s]}', False,(111,196,169))
-				score1_rect = score1.get_rect(center = (390,pos_y))
-				screen.blit(best_scores,best_scores_rect)
-				screen.blit(score1,score1_rect)
-				pos_y += delta_y
-
+		scores_number = 3
+		if len(unique_scores) < 3:
+			scores_number = len(unique_scores)
 		'''
-		O código em cima poderia ser otimizado através da utilização de um ternary operator, evitando a duplicação do código para desenho no ecrã
-		'''
-		'''
-		range_scores = range(3) if len(unique_scores) >= 3 else range(len(unique_scores))
-		for s in range_scores:
+		O código em cima poderia ser otimizado através da utilização de um ternary operator, permitindo fazer tudo numa única linha
+		'''		
+		#scores_number = 3 if len(unique_scores) >= 3 else len(unique_scores)			
+		
+		for s in range(scores_number):
 			score1 = test_font.render(f'{s + 1}º - {unique_scores[s]}', False,(111,196,169))
 			score1_rect = score1.get_rect(center = (390,pos_y))
 			screen.blit(best_scores,best_scores_rect)
 			screen.blit(score1,score1_rect)
-			pos_y += delta_y
-		'''
+			pos_y += delta_y			
+		
 	else:
 		pass	
 
