@@ -112,10 +112,12 @@ pygame.time.set_timer(snail_animation_timer,500)
 fly_animation_timer = pygame.USEREVENT + 3
 pygame.time.set_timer(fly_animation_timer,200)
 
+#play_game = True
 '''
 Execução permanente, com verificação de input do utilizador ou do estado da aplicação (Critério de Correção 7)
 '''
 while True:
+#while play_game:
 	for event in pygame.event.get():
 
 		'''
@@ -126,6 +128,8 @@ while True:
 		if event.type == pygame.QUIT:
 			pygame.quit()
 			exit()
+			#play_game = False
+			#break
 
 		if game_active:
 			if event.type == obstacle_timer:
