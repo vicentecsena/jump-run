@@ -24,10 +24,10 @@ def display_best_scores(number):
 	
 	#print(unique_scores)
 
-	if len(unique_scores) > 1:
+	if len(unique_scores) > 0:
 		best_scores = test_font.render("Os seus melhores resultados:",False,(111,196,169))
-		best_scores_rect = score_message.get_rect(center = (320,230))
-		pos_y = 270
+		best_scores_rect = score_message.get_rect(center = (320,170))
+		pos_y = 220
 		delta_y = 45
 		
 		scores_number = 3
@@ -47,7 +47,6 @@ def display_best_scores(number):
 		
 	else:
 		pass	
-
 
 def collision_sprite():
 	if pygame.sprite.spritecollide(player.sprite,obstacle_group,False):
@@ -84,20 +83,24 @@ obstacle_group = pygame.sprite.Group()
 sky_surface = pygame.image.load('graphics/sky.png').convert()
 ground_surface = pygame.image.load('graphics/ground.png').convert()
 
+'''
+Criação de Array (Critério de Correção 9)
+'''
+
 obstacle_rect_list = []
 
 scores_list = []
 
 # Ecrã inicial
 player_stand = pygame.image.load('graphics/player/jump.png').convert_alpha()
-player_stand = pygame.transform.scale(player_stand , (128, 184))
+player_stand = pygame.transform.scale(player_stand , (160, 230))
 player_stand_rect = player_stand.get_rect(center = (400,200))
 
 game_name = test_font.render('Jump\'N\'Run',False,(111,196,169))
-game_name_rect = game_name.get_rect(center = (400,80))
+game_name_rect = game_name.get_rect(center = (400,70))
 
 game_message = test_font.render('Carregue na tecla de Espaço para iniciar',False,(111,196,169))
-game_message_rect = game_message.get_rect(center = (400,330))
+game_message_rect = game_message.get_rect(center = (400,360))
 
 # Timer 
 obstacle_timer = pygame.USEREVENT + 1
@@ -108,8 +111,6 @@ pygame.time.set_timer(snail_animation_timer,500)
 
 fly_animation_timer = pygame.USEREVENT + 3
 pygame.time.set_timer(fly_animation_timer,200)
-
-
 
 '''
 Execução permanente, com verificação de input do utilizador ou do estado da aplicação (Critério de Correção 7)
@@ -131,7 +132,6 @@ while True:
 
 				'''
 				Chamada de função de inicialização da instância da classe (objeto). Passa como parâmetro o tipo de obstáculo (type) - (Critério de Correção 8)
-				Criação de Array (Critério de Correção 9)
 				'''
 				obstacle_group.add(Obstacle(choice(['fly','snail','snail','snail'])))
 		else:
@@ -168,7 +168,7 @@ while True:
 		#player_rect.midbottom = INITIAL_PLAYER_POS
 		player_gravity = 0
 		score_message = test_font.render(f'A sua pontuação: {score}',False,(111,196,169))
-		score_message_rect = score_message.get_rect(center = (400,150))
+		score_message_rect = score_message.get_rect(center = (400,120))
 		screen.blit(game_name,game_name_rect)
 		
 		
@@ -176,7 +176,9 @@ while True:
 			screen.blit(game_message,game_message_rect)
 			screen.blit(player_stand, player_stand_rect)
 		else: 
+			screen.blit(game_message, game_message_rect)
 			screen.blit(score_message,score_message_rect)
+
 			display_best_scores(3)
 
 	pygame.display.update()
