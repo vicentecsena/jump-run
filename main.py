@@ -21,22 +21,14 @@ def display_score():
 def display_best_scores(number):
 	unique_scores = list(set(scores_list))
 	unique_scores.sort(reverse=True)
-	
-	#print(unique_scores)
 
 	if len(unique_scores) > 0:
 		best_scores = test_font.render("Os seus melhores resultados:",False,(111,196,169))
 		best_scores_rect = score_message.get_rect(center = (320,170))
 		pos_y = 220
 		delta_y = 45
-		
-		scores_number = 3
-		if len(unique_scores) < 3:
-			scores_number = len(unique_scores)
-		'''
-		O código em cima poderia ser otimizado através da utilização de um ternary operator, permitindo fazer tudo numa única linha
-		'''		
-		#scores_number = 3 if len(unique_scores) >= 3 else len(unique_scores)			
+
+		scores_number = 3 if len(unique_scores) >= 3 else len(unique_scores)			
 		
 		for s in range(scores_number):
 			score1 = test_font.render(f'{s + 1}º - {unique_scores[s]}', False,(111,196,169))
@@ -86,7 +78,6 @@ ground_surface = pygame.image.load('graphics/ground.png').convert()
 '''
 Criação de Array (Critério de Correção 9)
 '''
-
 obstacle_rect_list = []
 
 scores_list = []
@@ -112,12 +103,11 @@ pygame.time.set_timer(snail_animation_timer,500)
 fly_animation_timer = pygame.USEREVENT + 3
 pygame.time.set_timer(fly_animation_timer,200)
 
-#play_game = True
+play_game = True
 '''
 Execução permanente, com verificação de input do utilizador ou do estado da aplicação (Critério de Correção 7)
 '''
-while True:
-#while play_game:
+while play_game:
 	for event in pygame.event.get():
 
 		'''
@@ -126,10 +116,8 @@ while True:
 		Verificação de input do utilizador (Critério de Correção 10)
 		'''
 		if event.type == pygame.QUIT:
-			pygame.quit()
-			exit()
-			#play_game = False
-			#break
+			play_game = False
+			
 
 		if game_active:
 			if event.type == obstacle_timer:
@@ -138,8 +126,8 @@ while True:
 				Chamada de função de inicialização da instância da classe (objeto). Passa como parâmetro o tipo de obstáculo (type) - (Critério de Correção 8)
 				'''
 				obstacle_group.add(Obstacle(choice(['fly','snail','snail','snail'])))
-		else:
-			if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+		
+		elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
 				game_active = True
 				
 				'''
@@ -150,7 +138,6 @@ while True:
 	if game_active:
 		screen.blit(sky_surface,(0,0))
 		screen.blit(ground_surface,(0,300))
-		
 		score = display_score()
 
 		# Player 
@@ -164,18 +151,16 @@ while True:
 		# colisão
 		game_active = collision_sprite()
 		if not game_active:
-			scores_list.append(score)		
+			scores_list.append(score)
+	
 	else:
-		screen.fill((94,129,162))
-		
+		screen.fill((94,129,162))	
 		obstacle_rect_list.clear()
-		#player_rect.midbottom = INITIAL_PLAYER_POS
 		player_gravity = 0
 		score_message = test_font.render(f'A sua pontuação: {score}',False,(111,196,169))
 		score_message_rect = score_message.get_rect(center = (400,120))
 		screen.blit(game_name,game_name_rect)
-		
-		
+				
 		if score == 0: 
 			screen.blit(game_message,game_message_rect)
 			screen.blit(player_stand, player_stand_rect)
